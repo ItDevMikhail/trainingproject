@@ -1,0 +1,31 @@
+<form action="">
+    <div>
+        <label for="login">Login</label>
+        <input type="text"
+         name="login"
+         [(ngModel)]="loginForm.login"
+          id="login"
+           placeholder="Write to login" 
+           required/>
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input type="text"
+         name="password"
+         id="password"
+         #correctness="ngModel"
+          [(ngModel)]="loginForm.password"
+           placeholder="Write to password"
+           minlength="8" 
+           required/>
+          <div *ngIf="correctness.invalid && (correctness.dirty || correctness.touched)">
+            <div *ngIf="correctness.errors?.required">
+              Required field
+            </div>
+            <div *ngIf="correctness.errors?.minlength">
+              Max possible value is 20
+            </div>
+          </div>
+          </div>  
+      <button routerLink="/library">Login</button>
+</form>

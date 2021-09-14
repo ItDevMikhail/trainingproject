@@ -1,0 +1,12 @@
+<div>
+    <label for="name">Book name: </label>
+    <input id="name" [(ngModel)]="book.name" placeholder="name">
+</div>
+<h2>My books</h2>
+<ul class="heroes">
+    <li *ngFor="let book of books">
+        <a routerLink="/detail/{{book.id}}">
+            <span class="badge">{{book.id}}</span> {{book.name}}
+        </a>
+    </li>
+</ul>
