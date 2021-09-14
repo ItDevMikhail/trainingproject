@@ -1,9 +1,12 @@
+<mat-toolbar class="mat-toolbar mat-toolbar-single-row">
+  <a (click)="goBack()">Back</a>
+  <!-- <a routerLink="/">HomePage</a> -->
+  <a routerLink="/library">Library</a>
+</mat-toolbar>
 <div *ngIf="book">
   <h2>{{book.name | uppercase}} Details</h2>
-  <div><span>id: </span>{{book.id}}</div>
   <div>
-    <label for="book-name">Book name: </label>
-    <input id="book-name" [(ngModel)]="book.name" placeholder="name">
+    <label for="book-name">Book name: {{book.name | uppercase}}</label>
+    <p>описание: какое-то описание из БД</p>
   </div>
-  <button (click)="goBack()">go back</button>
 </div>
