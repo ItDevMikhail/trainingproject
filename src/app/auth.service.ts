@@ -15,6 +15,6 @@ export class AuthService {
   postData(loginForm: any) {
 
     const body = { login: loginForm.login, password: loginForm.password };
-    return this.http.post('http://localhost:5000/api', body);
+    return this.http.post('http://localhost:5000/api/auth', body);
   }
 }

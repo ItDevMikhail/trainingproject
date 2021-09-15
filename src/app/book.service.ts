@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { IBook } from './iBook';
 import { BOOKS } from './mock-library';
 import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getBooks(): Observable<IBook[]>{
     const books = of(BOOKS);
@@ -23,11 +24,11 @@ export class BookService {
     const detail = DETAIL.find((d: { id: number; }) => d.id === id)!;
     return of(detail);
   }
-  // addBook(book: IBook): Observable<IBook> {
-  //   return 
-  //   // return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions).pipe(
-  //   //   tap((newHero: Hero) => this.log(`added hero w/ id=${newHero.id}`)),
-  //   //   catchError(this.handleError<Hero>('addHero'))
-  //   // );
+  // getBoooks(){
+  //   const this.http.get('http://localhost:5000/library/all', )
   // }
+  addBook(books: IBook) {
+    const body = { id: books.id, name: books.name, description: books.description };
+    return this.http.post('http://localhost:5000/library/detail', body);
+  }
 }
