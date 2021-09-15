@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { BOOKS } from '../mock-library';
+import { HttpClient} from '@angular/common/http';
+import { AuthService } from '../auth.service';
+import { IAuth } from '../iauth';
 
 @Component({
   selector: 'app-auth-page',
@@ -6,13 +10,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./auth-page.component.scss']
 })
 export class AuthPageComponent implements OnInit {
-  loginForm: any = {
+  loginForm: IAuth = {
     login: '',
     password: ''
   }
-  constructor() { }
+  receivedUser: IAuth | undefined;
+  done: boolean = false;
+  constructor(private http: HttpClient,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
+    localStorage.setItem('list', JSON.stringify(BOOKS))
   }
-
+  submit(loginForm: IAuth){
+    this.authService.postData(loginForm)
+            .subscribe(
+                (data: any) => {this.receivedUser=data; this.done=true;},
+                error => console.log(error)
+            );
+  }
 }

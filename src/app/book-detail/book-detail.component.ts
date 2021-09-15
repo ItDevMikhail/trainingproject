@@ -11,6 +11,7 @@ import { BookService } from '../book.service';
 })
 export class BookDetailComponent implements OnInit {
   @Input() book?: IBook;
+  @Input() detail?: IBook;
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
@@ -28,5 +29,4 @@ export class BookDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
-
 }

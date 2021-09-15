@@ -3,23 +3,28 @@
 </mat-toolbar>
 <mat-card>
   <mat-card-title>Authorization</mat-card-title>
-  <mat-form-field>
-    <label for="login">Login</label>
-    <input matInput type="text" name="login" [(ngModel)]="loginForm.login" id="login" placeholder="Write to login"
-      required />
-    <div>
-      <label for="password">Password</label>
-      <input matInput type="text" name="password" id="password" #correctness="ngModel" [(ngModel)]="loginForm.password"
-        placeholder="Write to password" minlength="8" required />
-      <div *ngIf="correctness.invalid && (correctness.dirty || correctness.touched)">
-        <div *ngIf="correctness.errors?.required">
-          Required field
-        </div>
+  <form id="form">
+    <mat-form-field>
+      <mat-label>Login</mat-label>
+      <input matInput type="text" name="login" [(ngModel)]="loginForm.login" id="login" placeholder="Write login"
+        required />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" name="password" id="password" #correctness="ngModel"
+        [(ngModel)]="loginForm.password" placeholder="Write password" minlength="8" required />
+      <div class="correctness" *ngIf="correctness.invalid && (correctness.dirty || correctness.touched)">
         <div *ngIf="correctness.errors?.minlength">
-          Max possible value is 20
+          Min possible value is 8*
         </div>
       </div>
-    </div>
-    <button mat-raised-button color="base" routerLink="/library">Login</button>
-  </mat-form-field>
+    </mat-form-field>
+  </form>
+  <button form="form" mat-raised-button color="base" (click)="submit(loginForm)">Login</button>
+  <button mat-raised-button color="base" routerLink="/register">Register</button>
 </mat-card>
+<div *ngIf="done">
+  <div>Получено от сервера:</div>
+  <div>Логин: {{receivedUser?.login}}</div>
+  <div>Пароль: {{receivedUser?.password}}</div>
+</div>

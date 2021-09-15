@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
   // registerUser(user){
   //   let headers = new Headers();
   //   headers.append('Content-type', 'application/json');
   //   return this.http.post()
   // }
+  postData(loginForm: any){
+          
+    const body = {name: loginForm.name, description: loginForm.description};
+    return this.http.post('http://localhost:5000/api', body); 
+}
 }

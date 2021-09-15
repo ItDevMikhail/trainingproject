@@ -1,15 +1,22 @@
 .mat-card {
-    button {
-        margin-top: 30px;
-        margin-left: 50%;
-        transform: translateX(-50%);
+    button + button{
+        margin-left: 20px;
     }
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
 }
 .mat-toolbar span{
     margin: 0 auto;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+.correctness{
+    opacity: .5;
+    color: red;
+    font-size: 12px;
 }

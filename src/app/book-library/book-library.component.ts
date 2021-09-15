@@ -10,10 +10,6 @@ import { Location } from '@angular/common';
   styleUrls: ['./book-library.component.scss']
 })
 export class BookLibraryComponent implements OnInit {
-  book: IBook = {
-    id: 1,
-    name: 'Books'
-  };
   books: IBook[] = [];
 
   constructor(private bookService: BookService,
