@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +12,9 @@ export class AuthService {
   //   headers.append('Content-type', 'application/json');
   //   return this.http.post()
   // }
-  postData(loginForm: any){
-          
-    const body = {name: loginForm.name, description: loginForm.description};
-    return this.http.post('http://localhost:5000/api', body); 
-}
+  postData(loginForm: any) {
+
+    const body = { login: loginForm.login, password: loginForm.password };
+    return this.http.post('http://localhost:5000/api', body);
+  }
 }
