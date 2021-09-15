@@ -16,15 +16,20 @@ export class BookLibraryComponent implements OnInit {
     private location: Location) { }
 
   ngOnInit(): void {
-    this.getBooks();
+    this.bookService.getBooks().subscribe((data: any) => this.books=data);
+    // this.getBooks();
+    this.setAnyCount();
+  }
+  public setAnyCount(): void {
+    this.bookService.changeCount(this.books);
+    console.log(this.books)
   }
 
-  getBooks(): void {
-    this.bookService.getBooks()
-      .subscribe(books => this.books = books)
-  }
+  // getBooks(): void {
+  //   this.bookService.getBooks()
+  //     .subscribe(books => this.books = books)
+  // }
   goBack(): void {
     this.location.back();
   }
-
 }
