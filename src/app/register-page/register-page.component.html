@@ -1,0 +1,31 @@
+<mat-toolbar class="mat-toolbar mat-toolbar-single-row">
+    <a routerLink="/auth">Auth</a>
+</mat-toolbar>
+<mat-card>
+    <mat-card-title>Registration</mat-card-title>
+    <form>
+        <mat-form-field>
+            <mat-label>Login</mat-label>
+            <input matInput type="text" name="login" [(ngModel)]="registerForm.login" id="login" placeholder="Write login"
+                required />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>E-mail</mat-label>
+            <input matInput type="email" name="login" [(ngModel)]="registerForm.email" id="login"
+                placeholder="Write e-mail" required />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" id="password" #correctness="ngModel"
+                [(ngModel)]="registerForm.password" placeholder="Write password" minlength="8" required />
+            <div class="correctness" *ngIf="correctness.invalid && (correctness.dirty || correctness.touched)">
+                <div *ngIf="correctness.errors?.minlength">
+                    Min possible value is 8*
+                </div>
+            </div>
+        </mat-form-field>
+        <div class="button">
+            <button mat-raised-button color="base" routerLink="/auth">Register</button>
+        </div>
+    </form>
+</mat-card>
