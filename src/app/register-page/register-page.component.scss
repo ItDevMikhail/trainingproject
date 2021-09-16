@@ -24,3 +24,17 @@ form{
     color: red;
     font-size: 12px;
 }
+.danger{
+    color:#000;
+    text-align: center;
+    font-style: italic;
+}
+.container{
+     max-width: 400px;
+     background-color: rgba($color: red, $alpha: 0.4);
+     margin: 0 auto;
+     border-radius: 5px;
+}
+.container.success{
+    background-color: rgba($color: green, $alpha: 0.4);
+}

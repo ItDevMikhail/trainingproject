@@ -1,9 +1,12 @@
 <mat-toolbar class="mat-toolbar mat-toolbar-single-row">
   <span>Library</span>
 </mat-toolbar>
+<div class="container">
+  <flash-messages class="danger"></flash-messages>
+  </div>
 <mat-card>
   <mat-card-title>Authorization</mat-card-title>
-  <form id="form">
+  <form (sumbit)="userLogin()">
     <mat-form-field>
       <mat-label>Login</mat-label>
       <input matInput type="text" name="login" [(ngModel)]="loginForm.login" id="login" placeholder="Write login"
@@ -20,7 +23,7 @@
       </div>
     </mat-form-field>
   </form>
-  <button form="form" mat-raised-button color="base" (click)="submit(loginForm)">Login</button>
+  <button form="form" mat-raised-button color="base" type="submit">Login</button>
   <button mat-raised-button color="base" routerLink="/register">Register</button>
 </mat-card>
 <div *ngIf="done">

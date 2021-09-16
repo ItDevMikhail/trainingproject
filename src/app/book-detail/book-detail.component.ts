@@ -3,7 +3,6 @@ import { IBook } from '../iBook';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { BookService } from '../book.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-book-detail',
@@ -12,7 +11,6 @@ import { Subscription } from 'rxjs';
 })
 export class BookDetailComponent implements OnInit {
   @Input() book?: any;
-  private subs: any;
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
@@ -20,14 +18,11 @@ export class BookDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.bookService.count$.subscribe((count) => this.subs);
-    console.log(this.subs)
-    this.bookService.getBoook(this.book).subscribe((data: any) => this.book= data(data.name, data.description));
-    // this.getBook();
+    this.getBook();
   }
   
   getBook(): void{
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = String(this.route.snapshot.paramMap.get('id'));
     this.bookService.getBook(id)
     .subscribe(book => this.book = book)
   }

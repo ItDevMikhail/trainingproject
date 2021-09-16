@@ -12,9 +12,13 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
-import { CreateBookComponent } from './create-book/create-book.component';
 import {MatInputModule} from '@angular/material/input';
+import { CreateBookComponent } from './create-book/create-book.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
+import { BookService } from './book.service';
+import { AuthService } from './auth.service';
+import { CheckFormService } from './check-form.service';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 @NgModule({
   declarations: [
@@ -35,10 +39,11 @@ import { RegisterPageComponent } from './register-page/register-page.component';
     MatCardModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    FlashMessagesModule.forRoot()
     
   ],
-  providers: [],
+  providers: [BookService, AuthService, CheckFormService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

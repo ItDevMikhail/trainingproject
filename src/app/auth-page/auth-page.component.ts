@@ -22,11 +22,7 @@ export class AuthPageComponent implements OnInit {
   ngOnInit(): void {
     localStorage.setItem('list', JSON.stringify(BOOKS))
   }
-  submit(loginForm: IAuth){
-    this.authService.postData(loginForm)
-            .subscribe(
-                (data: any) => {this.receivedUser=data; this.done=true;},
-                error => console.log(error)
-            );
+  userLogin(){
+
   }
 }
