@@ -38,7 +38,7 @@ export class RegisterPageComponent implements OnInit {
     this.authService.registerUser(user)
       .subscribe(
         (data: any) => {
-          if (data._id) {
+          if (data = this.login) {
             this.flashMessages.show("Пользователь добавлен", { timeout: 1000 });
             this.success=true;
             setTimeout(()=>{

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BOOKS } from '../mock-library';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
-import { IAuth } from '../iauth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth-page',
@@ -10,19 +9,28 @@ import { IAuth } from '../iauth';
   styleUrls: ['./auth-page.component.scss']
 })
 export class AuthPageComponent implements OnInit {
-  loginForm: IAuth = {
-    login: '',
-    password: ''
-  }
-  receivedUser: IAuth | undefined;
-  done: boolean = false;
-  constructor(private http: HttpClient,
-    private authService: AuthService) { }
+  login: String | undefined;
+  password: String | undefined;
+  constructor(private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit(): void {
-    localStorage.setItem('list', JSON.stringify(BOOKS))
-  }
-  userLogin(){
 
   }
-}
+  userLogin() {
+    const user = {
+      login: this.login,
+      password: this.password
+    }
+    this.authService.authUser(user)
+      .subscribe(
+        (data: any) => {
+          if (data.login = this.login) {
+            localStorage.setItem('token', data.token);
+            this.router.navigate(['/library']);
+          } else {
+            console.log(data.message)
+          }
+        })
+      }
+  }

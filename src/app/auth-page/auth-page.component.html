@@ -6,28 +6,24 @@
   </div>
 <mat-card>
   <mat-card-title>Authorization</mat-card-title>
-  <form (sumbit)="userLogin()">
+  <form (submit)="userLogin()">
     <mat-form-field>
       <mat-label>Login</mat-label>
-      <input matInput type="text" name="login" [(ngModel)]="loginForm.login" id="login" placeholder="Write login"
+      <input matInput type="text" name="login" [(ngModel)]="login" id="login" placeholder="Write login"
         required />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
       <input matInput type="password" name="password" id="password" #correctness="ngModel"
-        [(ngModel)]="loginForm.password" placeholder="Write password" minlength="8" required />
+        [(ngModel)]="password" placeholder="Write password" minlength="8" required />
       <div class="correctness" *ngIf="correctness.invalid && (correctness.dirty || correctness.touched)">
         <div *ngIf="correctness.errors?.minlength">
           Min possible value is 8*
         </div>
       </div>
     </mat-form-field>
+    <button  mat-raised-button color="base" type="submit">Login</button>
   </form>
-  <button form="form" mat-raised-button color="base" type="submit">Login</button>
+
   <button mat-raised-button color="base" routerLink="/register">Register</button>
 </mat-card>
-<div *ngIf="done">
-  <div>Получено от сервера:</div>
-  <div>Логин: {{receivedUser?.login}}</div>
-  <div>Пароль: {{receivedUser?.password}}</div>
-</div>

@@ -7,12 +7,9 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
 
   constructor(private http: HttpClient) { }
-  postData(loginForm: any) {
-    const body = { login: loginForm.login, password: loginForm.password };
-    return this.http.post('http://localhost:5000/api/auth', body);
-  }
   authUser(user: any){
-    return this.http.post('http://localhost:5000/users/auth', user);
+    const body = { login: user.login, password: user.password };
+    return this.http.post('http://localhost:5000/users/auth', body);
   }
   registerUser(user: any) {
     const body = { login: user.login, email: user.email, password: user.password };

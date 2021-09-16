@@ -1,5 +1,7 @@
 import Auth from './auth.js';
-import bcrypt from 'bcryptjs';
+import Hashing from './hash.js';
+import generateJWT from './token.js';
+import * as jwt from 'jsonwebtoken'
 
 class AuthController {
     async reg(req, res) {
@@ -18,32 +20,38 @@ class AuthController {
                 email: req.body.email,
                 password: req.body.password,
             }
-            bcrypt.genSalt(10, function (err, salt) {
-                bcrypt.hash("B4c0/\/", salt, function (err, hash) {
-                    newUser.password = hash;
-                });
-            })
-            const req = await Auth.create();
-            res.json(reg)
+            newUser.password = Hashing(newUser.password)
+            const reg = await Auth.create(newUser);
+            res.json(reg.login)
         } catch (e) {
             res.status(500).json({ success: false, msg: "Пользователь не был добавлен" })
+        }
+    }
+    async getOne(req, res) {
+        try {
+            let authUser = {
+                login: req.body.login,
+                password: req.body.password
+            }            
+            const auth = await Auth.findOne({login: authUser.login})
+            const pass = Hashing(authUser.password)
+            if(!auth){
+                res.status(400).json({ message: 'пользователь не найден' })
+            } else {
+                if(pass === auth.password){
+                    const token = generateJWT(authUser);
+                    res.json({ login: auth.login, token: token}); 
+                } else{
+                res.status(400).json({ message: 'Не верный пароль' })
+                }
+            }
+        } catch (e) {
+            res.status(500).json(e)
         }
     }
     async getAll(req, res) {
         try {
             const auth = await Auth.find();
-            return res.json(auth);
-        } catch (e) {
-            res.status(500).json(e)
-        }
-    }
-    async getOne(req, res) {
-        try {
-            const { id } = req.params
-            if (!id) {
-                res.status(400).json({ message: 'Id не указан' })
-            }
-            const auth = await Auth.findById(id);
             return res.json(auth);
         } catch (e) {
             res.status(500).json(e)
