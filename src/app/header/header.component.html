@@ -1,0 +1,11 @@
+<mat-toolbar class="mat-toolbar mat-toolbar-single-row">
+    <button class="btn-home" mat-raised-button color="base" routerLink="/home">Home</button>
+    <button *ngIf="libraryMenu()" mat-raised-button color="base" routerLink="/library/add" >Add book</button>
+    <button *ngIf="nolibraryMenu()" mat-raised-button color="base" routerLink="/library" >Library</button>
+    <button *ngIf="authService.IsLogin()" class="btn-logout" mat-raised-button color="base" (click)="logout()" >Logout</button>
+    <button *ngIf="!authService.IsLogin() && authMenu()"class="btn-login" mat-raised-button color="base" routerLink="/users/auth">Login</button>
+    <button *ngIf="!authService.IsLogin() && registerMenu()"class="btn-register" mat-raised-button color="base" routerLink="/users/register">Register</button>
+</mat-toolbar>
+<div class="container">
+    <flash-messages class="danger"></flash-messages>
+</div>
