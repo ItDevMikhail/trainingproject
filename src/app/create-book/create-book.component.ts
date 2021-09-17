@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../book.service';
 import { IBook } from '../iBook';
-import { BOOKS } from '../mock-library';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-create-book',
@@ -10,21 +10,43 @@ import { BOOKS } from '../mock-library';
 })
 export class CreateBookComponent implements OnInit {
   books: IBook = {
-    id: 1,
     name: '',
     description: ''
   };
   responseBook: IBook | undefined;
-  done: boolean = false;
-  constructor(private bookService: BookService) { }
+  constructor(private bookService: BookService,
+    private flashMessages: FlashMessagesService) { }
 
   ngOnInit(): void {
   }
-  add(books: IBook) {
+  add(books: IBook): any {
+    console.log(books.description)
+    if (books.name.length <= 2){
+      this.flashMessages.show("Введите название книги", {timeout: 2000})
+      return false;
+    } 
+    if (books.description.length <= 0){
+      this.flashMessages.show("Напишите описание книги", {timeout: 2000})
+      return false;
+    }
+    if (books.description.length <= 20){
+      this.flashMessages.show("Короткое описание", {timeout: 2000})
+      return false;
+    }
     this.bookService.addBook(books)
       .subscribe(
-        (data: any) => { this.responseBook = data; this.done = true; },
-        error => console.log(error)
+        () => {
+          this.flashMessages.show("Книга добавлена", {timeout: 2000})
+          books.name ='',
+          books.description = ''
+        },
+        (error) => {
+          if ((error.message).includes('400')) {
+            this.flashMessages.show("Такая книга уже есть", { timeout: 2000 });
+          } else  {
+            this.flashMessages.show("404 Bad request", { timeout: 2000 });
+          } 
+        }
       );
   }
 }

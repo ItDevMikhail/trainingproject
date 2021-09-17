@@ -15,7 +15,7 @@ export class RegisterPageComponent implements OnInit {
   email: String | undefined;
   password: String | undefined;
   constructor(private checkForm: CheckFormService,
-    private flashMessages: FlashMessagesService,
+    public flashMessages: FlashMessagesService,
     private authService: AuthService,
     private router: Router) { }
 
@@ -40,16 +40,20 @@ export class RegisterPageComponent implements OnInit {
         (data: any) => {
           if (data = this.login) {
             this.flashMessages.show("Пользователь добавлен", { timeout: 1000 });
-            this.success=true;
-            setTimeout(()=>{
-              this.router.navigate(['/auth']);
+            this.success = true;
+            setTimeout(() => {
+              this.router.navigate(['auth']);
             }, 1000)
-            
           } else {
             this.flashMessages.show("Пользователь не добавлен", { timeout: 2000 });
-            
           }
-        },
+        }, (error) => {
+          if ((error.message).includes('400')) {
+            this.flashMessages.show("Логин занят", { timeout: 2000 });
+          } else  {
+            this.flashMessages.show("404 Bad request", { timeout: 2000 });
+          } 
+        }
       );
   }
 }

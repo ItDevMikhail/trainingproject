@@ -4,21 +4,16 @@ import generateJWT from './token.js';
 import * as jwt from 'jsonwebtoken'
 
 class AuthController {
-    async reg(req, res) {
-        try {
-            const { login, email, password } = req.body
-            const reg = await Auth.create({ login, email, password })
-            res.json(reg)
-        } catch (e) {
-            res.status(500).json({ success: false, msg: "Пользователь не был добавлен" })
-        }
-    }
-    async create(req, res) {
+    async createUser(req, res) {
         try {
             let newUser = {
                 login: req.body.login,
                 email: req.body.email,
                 password: req.body.password,
+            }
+            const user = await Auth.findOne({login: newUser.login})
+            if(user){
+                res.status(400).json({msg: 'Логин занят'})
             }
             newUser.password = Hashing(newUser.password)
             const reg = await Auth.create(newUser);
@@ -27,7 +22,7 @@ class AuthController {
             res.status(500).json({ success: false, msg: "Пользователь не был добавлен" })
         }
     }
-    async getOne(req, res) {
+    async getUser(req, res) {
         try {
             let authUser = {
                 login: req.body.login,
@@ -36,48 +31,15 @@ class AuthController {
             const auth = await Auth.findOne({login: authUser.login})
             const pass = Hashing(authUser.password)
             if(!auth){
-                res.status(400).json({ message: 'пользователь не найден' })
+                res.status(400).json({ msg: 'пользователь не найден' })
             } else {
                 if(pass === auth.password){
                     const token = generateJWT(authUser);
                     res.json({ login: auth.login, token: token}); 
                 } else{
-                res.status(400).json({ message: 'Не верный пароль' })
+                res.status(401).json({ msg: 'Не верный пароль' })
                 }
             }
-        } catch (e) {
-            res.status(500).json(e)
-        }
-    }
-    async getAll(req, res) {
-        try {
-            const auth = await Auth.find();
-            return res.json(auth);
-        } catch (e) {
-            res.status(500).json(e)
-        }
-    }
-    async update(req, res) {
-        try {
-            const auth = req.body
-            if (!auth._id) {
-                res.status(400).json({ message: 'Id не указан' })
-            }
-            const updateauth = await Auth.findByIdAndUpdate(auth._id, auth, { new: true })
-            return res.json(updateauth)
-        } catch (e) {
-            res.status(500).json(e)
-        }
-    }
-    async detele(req, res) {
-        try {
-            const { id } = req.params
-            if (!id) {
-                res.status(400).json({ message: 'Id не указан' })
-            }
-            const deleteauth = await Auth.findByIdAndDelete(id)
-            return res.json(deleteauth)
-
         } catch (e) {
             res.status(500).json(e)
         }

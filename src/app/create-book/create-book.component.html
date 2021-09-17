@@ -1,9 +1,6 @@
-<mat-toolbar class="mat-toolbar mat-toolbar-single-row">
-  <a routerLink="/library">Library</a>
-</mat-toolbar>
+<app-header></app-header>
 <mat-card>
   <form>
-
     <mat-card-title>Create Book</mat-card-title>
         <label for="name">Book name</label>
         <input  type="text" name="name" id="name" [(ngModel)]="books.name" placeholder="Write the title of the book" required />
@@ -14,9 +11,3 @@
     <button mat-raised-button color="base" (click)="add(books)">Add Book</button>
   </form>
 </mat-card>
-<div *ngIf="done">
-  <div>Получено от сервера:</div>
-  <div>Id: {{responseBook?.id}}</div>
-  <div>Name: {{responseBook?.name}}</div>
-  <div>Desription: {{responseBook?.description}}</div>
-</div>

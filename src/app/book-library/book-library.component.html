@@ -1,11 +1,8 @@
-<mat-toolbar class="mat-toolbar mat-toolbar-single-row">
-    <a (click)="goBack()">Back</a>
-    <a routerLink="/create">Create Book</a>
-</mat-toolbar>
+<app-header></app-header>
 <h2>Books library</h2>
 <table mat-table>
     <tr *ngFor="let book of books">
-        <a routerLink="/detail/{{book._id}}">
+        <a routerLink="/library/detail/{{book._id}}">
          {{book.name}}
         </a>
     </tr>

@@ -1,8 +1,4 @@
-<mat-toolbar class="mat-toolbar mat-toolbar-single-row">
-  <a (click)="goBack()">Back</a>
-  <a routerLink="/create">Create Book</a>
-  <a routerLink="/library">Library</a>
-</mat-toolbar>
+<app-header></app-header>
 <div class="container">
   <div *ngIf="book">
     <h2>{{book.name | uppercase}}</h2>
